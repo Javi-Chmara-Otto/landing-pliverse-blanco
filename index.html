@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PliVerse — Juguetes 3D que despiertan la imaginación</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #FDF8F2;
+      --ink: #1A1412;
+      --coral: #FF5733;
+      --lime: #BFFF00;
+      --sky: #4ECDC4;
+      --soft: #F5EFE6;
+      --muted: #8A7F78;
+      --r: 16px;
+      --r-lg: 24px;
+      --max: 1100px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; }
+
+    /* INNER WRAPPER */
+    .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(253,248,242,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(26,20,18,0.06); }
+    .nav-inner { max-width: var(--max); margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: 'Fraunces', serif; font-weight: 900; font-size: 1.5rem; color: var(--ink); letter-spacing: -0.03em; }
+    .nav-logo span { color: var(--coral); }
+    .nav-links { display: flex; gap: 0.75rem; }
+    .nav-links a { font-size: 0.85rem; font-weight: 500; color: var(--ink); text-decoration: none; padding: 0.4rem 0.9rem; border-radius: 999px; transition: background 0.2s; }
+    .nav-links a:hover { background: var(--soft); }
+    .nav-cta { background: var(--ink) !important; color: var(--cream) !important; font-weight: 600 !important; }
+    .nav-cta:hover { background: var(--coral) !important; }
+
+    /* BUTTONS */
+    .btn-primary { background: var(--coral); color: #fff; border: none; cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 600; padding: 0.85rem 1.8rem; border-radius: 999px; text-decoration: none; display: inline-block; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(255,87,51,0.35); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,87,51,0.5); }
+    .btn-secondary { background: transparent; color: var(--ink); border: 2px solid var(--ink); font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 600; padding: 0.85rem 1.8rem; border-radius: 999px; text-decoration: none; display: inline-block; transition: background 0.2s, color 0.2s; }
+    .btn-secondary:hover { background: var(--ink); color: var(--cream); }
+
+    /* HERO */
+    .hero { min-height: 100vh; padding: 6rem 1.5rem 3rem; position: relative; overflow: hidden; display: flex; align-items: center; }
+    .hero-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; pointer-events: none; }
+    .hero-blob-1 { width: 500px; height: 500px; background: var(--coral); top: -100px; right: -150px; animation: float 8s ease-in-out infinite; }
+    .hero-blob-2 { width: 300px; height: 300px; background: var(--sky); bottom: 0; left: -80px; animation: float 10s ease-in-out infinite reverse; }
+    .hero-blob-3 { width: 200px; height: 200px; background: var(--lime); top: 40%; right: 10%; animation: float 7s ease-in-out infinite 2s; }
+    @keyframes float { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-30px) scale(1.05); } }
+
+    .hero-grid { position: relative; z-index: 2; max-width: var(--max); margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-text { display: flex; flex-direction: column; gap: 1.5rem; justify-content: center; animation: fadeUp 0.8s ease both; }
+
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--lime); color: var(--ink); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.9rem; border-radius: 999px; width: fit-content; }
+    .hero-badge::before { content: '✦'; font-size: 0.7rem; }
+
+    h1 { font-family: 'Fraunces', serif; font-size: clamp(3rem, 9vw, 5.8rem); font-weight: 900; line-height: 1.0; letter-spacing: -0.04em; }
+    h1 em { font-style: italic; color: var(--coral); }
+    .hero-sub { font-size: 1rem; line-height: 1.65; color: #5A4F4A; max-width: 440px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+    .hero-visual { animation: fadeUp 0.8s ease 0.2s both; }
+    .hero-toy-card { background: white; border-radius: 28px; padding: 2rem; box-shadow: 0 20px 60px rgba(26,20,18,0.12); display: flex; flex-direction: column; align-items: center; gap: 1rem; position: relative; }
+    .toy-emoji-big { font-size: 7rem; line-height: 1; animation: wiggle 3s ease-in-out infinite; }
+    @keyframes wiggle { 0%,100% { transform: rotate(-5deg) scale(1); } 25% { transform: rotate(5deg) scale(1.05); } 75% { transform: rotate(-3deg) scale(0.98); } }
+    .toy-caption { font-size: 0.8rem; font-weight: 600; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+    .toy-name { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 700; text-align: center; }
+    .floating-tag { position: absolute; background: var(--lime); color: var(--ink); font-size: 0.72rem; font-weight: 700; padding: 0.4rem 0.8rem; border-radius: 999px; box-shadow: 0 4px 14px rgba(0,0,0,0.1); animation: bobY 4s ease-in-out infinite; }
+    .floating-tag-1 { top: 10px; right: -10px; }
+    .floating-tag-2 { bottom: 30px; left: -10px; background: var(--sky); animation-delay: 1.5s; }
+    @keyframes bobY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* SECTIONS */
+    section { padding: 4rem 0; }
+    .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral); margin-bottom: 0.75rem; }
+    h2 { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; line-height: 1.1; letter-spacing: -0.025em; }
+    h2 em { font-style: italic; color: var(--coral); }
+    p { line-height: 1.7; color: #5A4F4A; }
+
+    /* COLORED CARD SECTIONS */
+    .card-section { padding: 4rem 1.5rem; }
+    .card-section > .inner { padding: 0; }
+
+    /* PROBLEM */
+    .problem-wrap { background: var(--ink); color: var(--cream); border-radius: var(--r-lg); padding: 3rem 2rem; }
+    .problem-wrap .section-label { color: var(--lime); }
+    .problem-wrap h2 { color: var(--cream); }
+    .problem-wrap h2 em { color: var(--coral); }
+    .problem-wrap > p { color: rgba(253,248,242,0.75); margin-top: 1rem; }
+    .problem-visual { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.75rem; }
+    .stat-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r); padding: 1.25rem; }
+    .stat-num { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 900; color: var(--lime); line-height: 1; }
+    .stat-desc { font-size: 0.8rem; color: rgba(253,248,242,0.65); margin-top: 0.3rem; }
+
+    /* BENEFITS */
+    .benefits-section { background: var(--cream); }
+    .benefits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+    .benefit-card { background: white; border-radius: var(--r); padding: 1.5rem 1.25rem; box-shadow: 0 4px 20px rgba(26,20,18,0.06); transition: transform 0.25s, box-shadow 0.25s; }
+    .benefit-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,20,18,0.12); }
+    .benefit-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .benefit-title { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .benefit-desc { font-size: 0.82rem; line-height: 1.6; }
+    .benefit-card:nth-child(1) { border-top: 4px solid var(--coral); }
+    .benefit-card:nth-child(2) { border-top: 4px solid var(--sky); }
+    .benefit-card:nth-child(3) { border-top: 4px solid var(--lime); }
+    .benefit-card:nth-child(4) { border-top: 4px solid var(--coral); }
+
+    /* PRODUCTS */
+    .products-section { background: var(--soft); }
+    .products-grid { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 2rem; }
+    .product-card { background: white; border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 6px 24px rgba(26,20,18,0.08); display: flex; flex-direction: column; transition: transform 0.25s; }
+    .product-card:hover { transform: translateY(-4px); }
+    .product-img { min-height: 220px; display: flex; align-items: center; justify-content: center; font-size: 6rem; position: relative; }
+    .product-img::after { content: 'NUEVO'; position: absolute; top: 12px; left: 12px; background: var(--coral); color: white; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; padding: 0.25rem 0.6rem; border-radius: 999px; }
+    .product-card:nth-child(2) .product-img::after { background: var(--sky); content: 'POPULAR'; }
+    .product-card:nth-child(3) .product-img::after { background: #a855f7; content: 'LIMITADO'; }
+    .product-img-bg1 { background: linear-gradient(135deg, #fff0eb, #ffe0d4); }
+    .product-img-bg2 { background: linear-gradient(135deg, #e8fbfa, #c9f5f3); }
+    .product-img-bg3 { background: linear-gradient(135deg, #f3e8ff, #e8d5ff); }
+    .product-info { padding: 1.25rem; }
+    .product-name { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .product-desc { font-size: 0.82rem; margin-bottom: 0.75rem; }
+    .product-price { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 900; color: var(--coral); }
+    .product-actions { display: flex; gap: 0.6rem; margin-top: 1rem; }
+    .btn-cart { flex: 1; background: var(--ink); color: var(--cream); border: none; cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 600; padding: 0.75rem; border-radius: 999px; transition: background 0.2s; }
+    .btn-cart:hover { background: var(--coral); }
+    .btn-detail { background: var(--soft); color: var(--ink); border: none; cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 600; padding: 0.75rem 1rem; border-radius: 999px; transition: background 0.2s; }
+    .btn-detail:hover { background: #e8e0d6; }
+
+    /* PACKS */
+    .packs-grid { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+    .pack-card { border-radius: var(--r-lg); padding: 1.75rem 1.5rem; position: relative; overflow: hidden; transition: transform 0.2s; }
+    .pack-card:hover { transform: scale(1.02); }
+    .pack-card-1 { background: linear-gradient(135deg, #FF5733, #ff8c6b); color: white; }
+    .pack-card-2 { background: linear-gradient(135deg, #4ECDC4, #26a69a); color: white; }
+    .pack-card-3 { background: linear-gradient(135deg, #1A1412, #3d2e2a); color: var(--cream); }
+    .pack-emoji { font-size: 3rem; margin-bottom: 0.75rem; }
+    .pack-name { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 900; margin-bottom: 0.4rem; }
+    .pack-desc { font-size: 0.85rem; opacity: 0.85; margin-bottom: 1rem; }
+    .pack-price { font-size: 1.8rem; font-weight: 900; letter-spacing: -0.03em; }
+    .pack-card::before { content: ''; position: absolute; right: -30px; top: -30px; width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,0.1); }
+    .packs-cta { text-align: center; margin-top: 2rem; }
+
+    /* STORY */
+    .story-wrap { background: var(--ink); color: var(--cream); border-radius: var(--r-lg); padding: 3.5rem 2rem; text-align: center; position: relative; overflow: hidden; }
+    .story-wrap::before { content: '✦ ✦ ✦'; position: absolute; font-size: 8rem; opacity: 0.04; top: 50%; left: 50%; transform: translate(-50%,-50%); white-space: nowrap; letter-spacing: 2rem; }
+    .story-wrap .section-label { color: var(--lime); }
+    .story-wrap h2 { color: var(--cream); }
+    .story-wrap h2 em { color: var(--coral); }
+    .story-wrap > p { color: rgba(253,248,242,0.75); margin-top: 1rem; font-size: 1.05rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .story-quote { font-family: 'Fraunces', serif; font-style: italic; font-size: 1.4rem; color: var(--lime); margin-top: 2rem; line-height: 1.4; position: relative; }
+
+    /* TRUST */
+    .trust-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+    .trust-item { background: white; border-radius: var(--r); padding: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem; box-shadow: 0 2px 12px rgba(26,20,18,0.06); }
+    .trust-icon { font-size: 1.6rem; }
+    .trust-label { font-weight: 700; font-size: 0.88rem; }
+    .trust-sub { font-size: 0.78rem; color: var(--muted); }
+
+    /* WHOLESALE */
+    .wholesale-wrap { background: linear-gradient(135deg, #1A1412 0%, #3d2e2a 100%); color: var(--cream); border-radius: var(--r-lg); padding: 3rem 2rem; position: relative; overflow: hidden; }
+    .wholesale-wrap::after { content: ''; position: absolute; right: -50px; bottom: -50px; width: 200px; height: 200px; border-radius: 50%; background: var(--coral); opacity: 0.15; }
+    .wholesale-wrap .section-label { color: var(--lime); }
+    .wholesale-wrap h2 { color: var(--cream); }
+    .wholesale-wrap > p { color: rgba(253,248,242,0.75); margin-top: 1rem; font-size: 0.95rem; }
+    .wholesale-features { list-style: none; margin: 1.5rem 0; display: flex; flex-direction: column; gap: 0.6rem; }
+    .wholesale-features li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; color: rgba(253,248,242,0.9); }
+    .wholesale-features li::before { content: '✦'; color: var(--lime); font-size: 0.65rem; flex-shrink: 0; }
+    .btn-wholesale { background: var(--lime); color: var(--ink); border: none; cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 700; padding: 0.9rem 2rem; border-radius: 999px; text-decoration: none; display: inline-block; transition: transform 0.2s, box-shadow 0.2s; position: relative; z-index: 1; }
+    .btn-wholesale:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(191,255,0,0.3); }
+
+    /* TESTIMONIALS */
+    .testimonials-grid { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+    .testi-card { background: white; border-radius: var(--r); padding: 1.5rem; box-shadow: 0 4px 20px rgba(26,20,18,0.06); }
+    .testi-stars { color: #F59E0B; font-size: 1rem; margin-bottom: 0.75rem; letter-spacing: 0.1em; }
+    .testi-text { font-size: 0.9rem; line-height: 1.65; font-style: italic; margin-bottom: 1rem; }
+    .testi-author { display: flex; align-items: center; gap: 0.75rem; }
+    .testi-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .testi-name { font-weight: 700; font-size: 0.85rem; }
+    .testi-role { font-size: 0.75rem; color: var(--muted); }
+
+    /* FINAL CTA */
+    .final-cta-wrap { background: var(--coral); color: white; border-radius: var(--r-lg); padding: 4rem 2rem; text-align: center; position: relative; overflow: hidden; }
+    .final-cta-wrap::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at top right, rgba(255,255,255,0.15), transparent); }
+    .final-cta-wrap .section-label { color: rgba(255,255,255,0.7); position: relative; }
+    .final-cta-wrap h2 { color: white; font-style: italic; position: relative; }
+    .final-cta-wrap > p { color: rgba(255,255,255,0.85); margin-top: 0.75rem; position: relative; }
+    .btn-final { background: white; color: var(--coral); font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700; padding: 1rem 2.5rem; border-radius: 999px; text-decoration: none; display: inline-block; margin-top: 1.75rem; position: relative; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+    .btn-final:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+
+    /* FOOTER */
+    footer { background: var(--ink); color: rgba(253,248,242,0.75); padding: 3rem 0 2rem; }
+    .footer-logo { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 900; color: var(--cream); margin-bottom: 0.5rem; }
+    .footer-logo span { color: var(--coral); }
+    .footer-tagline { font-size: 0.85rem; margin-bottom: 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+    .footer-col-title { font-weight: 700; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream); margin-bottom: 1rem; }
+    .footer-col a, .footer-col p { display: block; font-size: 0.85rem; color: rgba(253,248,242,0.65); text-decoration: none; margin-bottom: 0.5rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--lime); }
+    .social-links { display: flex; gap: 0.75rem; margin-top: 0.5rem; }
+    .social-btn { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: background 0.2s; cursor: pointer; }
+    .social-btn:hover { background: var(--coral); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.75rem; }
+
+    /* DIVIDER */
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(26,20,18,0.1), transparent); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* DESKTOP */
+    @media (min-width: 900px) {
+      .inner { padding: 0 2.5rem; }
+      .nav-inner { padding: 1rem 2.5rem; }
+
+      .hero { padding: 7rem 2.5rem 5rem; }
+      .hero-grid { grid-template-columns: 1fr 1fr; align-items: center; gap: 5rem; padding: 0 1rem; }
+
+      section { padding: 5rem 0; }
+      .card-section { padding: 5rem 2.5rem; }
+
+      .benefits-grid { grid-template-columns: repeat(4, 1fr); }
+      .products-grid { flex-direction: row; }
+      .product-card { flex: 1; }
+      .packs-grid { flex-direction: row; }
+      .pack-card { flex: 1; }
+      .trust-grid { grid-template-columns: repeat(4, 1fr); }
+      .testimonials-grid { flex-direction: row; }
+      .testi-card { flex: 1; }
+      .footer-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-logo">Pli<span>Verse</span></div>
+      <div class="nav-links">
+        <a href="#productos">Tienda</a>
+        <a href="#mayoristas" class="nav-cta">Mayoristas</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+    <div class="hero-blob hero-blob-3"></div>
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="hero-badge">Hecho en Argentina &#127462;&#127479;</div>
+        <h1>Juguetes 3D que despiertan la <em>imaginación</em></h1>
+        <p class="hero-sub">Diseños únicos, resistentes y seguros para que los chicos jueguen, exploren y se diviertan sin límites.</p>
+        <div class="hero-actions">
+          <a href="#productos" class="btn-primary">Ver colección →</a>
+          <a href="#packs" class="btn-secondary">Comprar ahora</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-toy-card">
+          <div class="floating-tag floating-tag-1">🧩 Articulado</div>
+          <div class="floating-tag floating-tag-2">✔ Seguro y flexible</div>
+          <div class="toy-emoji-big">🦕</div>
+          <div class="toy-caption">Juguete estrella</div>
+          <div class="toy-name">Dinosaurio Articulado 3D</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROBLEM -->
+  <section class="card-section">
+    <div class="inner">
+      <div class="problem-wrap reveal">
+        <div class="section-label">El problema</div>
+        <h2>Menos pantallas.<br>Más <em>imaginación.</em></h2>
+        <p>En un mundo lleno de dispositivos, los chicos necesitan volver a crear, explorar y usar sus manos. Los juguetes de PliVerse están diseñados para estimular la creatividad y la curiosidad de forma natural.</p>
+        <div class="problem-visual">
+          <div class="stat-card">
+            <div class="stat-num">7hs</div>
+            <div class="stat-desc">tiempo frente a pantallas por día en promedio</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">3x</div>
+            <div class="stat-desc">más creatividad con juego físico y manual</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section class="benefits-section" id="beneficios">
+    <div class="inner">
+      <div class="section-label reveal">Por qué elegirnos</div>
+      <h2 class="reveal">¿Por qué elegir <em>PliVerse?</em></h2>
+      <div class="benefits-grid">
+        <div class="benefit-card reveal">
+          <div class="benefit-icon">🧠</div>
+          <div class="benefit-title">Estimulan la creatividad</div>
+          <div class="benefit-desc">Cada diseño invita a inventar historias y crear mundos propios.</div>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icon">💪</div>
+          <div class="benefit-title">Resistentes y flexibles</div>
+          <div class="benefit-desc">Materiales duraderos que soportan el uso diario sin romperse.</div>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icon">🎁</div>
+          <div class="benefit-title">Perfectos para regalar</div>
+          <div class="benefit-desc">Originales, llamativos y diferentes a los juguetes tradicionales.</div>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icon">&#127462;&#127479;</div>
+          <div class="benefit-title">Producción local</div>
+          <div class="benefit-desc">Diseñados y fabricados con dedicación en Argentina.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PRODUCTS -->
+  <section class="products-section" id="productos">
+    <div class="inner">
+      <div class="section-label reveal">Nuestra tienda</div>
+      <h2 class="reveal">Nuestros <em>favoritos</em></h2>
+      <div class="products-grid">
+        <div class="product-card reveal">
+          <div class="product-img product-img-bg1">🦕</div>
+          <div class="product-info">
+            <div class="product-name">Dinosaurio Articulado 3D</div>
+            <div class="product-desc">Flexible, resistente y lleno de detalle. ¡Mueve cada parte!</div>
+            <div class="product-price">$4.500</div>
+            <div class="product-actions">
+              <button class="btn-cart">🛒 Agregar al carrito</button>
+              <button class="btn-detail">Ver →</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card reveal">
+          <div class="product-img product-img-bg2">🐙</div>
+          <div class="product-info">
+            <div class="product-name">Pulpo Articulado 3D</div>
+            <div class="product-desc">Tentáculos que se mueven. Favorito de los chicos del mar.</div>
+            <div class="product-price">$4.200</div>
+            <div class="product-actions">
+              <button class="btn-cart">🛒 Agregar al carrito</button>
+              <button class="btn-detail">Ver →</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card reveal">
+          <div class="product-img product-img-bg3">🐉</div>
+          <div class="product-info">
+            <div class="product-name">Dragón Articulado 3D</div>
+            <div class="product-desc">Edición limitada. El más solicitado de la colección fantasía.</div>
+            <div class="product-price">$5.800</div>
+            <div class="product-actions">
+              <button class="btn-cart">🛒 Agregar al carrito</button>
+              <button class="btn-detail">Ver →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PACKS -->
+  <section id="packs">
+    <div class="inner">
+      <div class="section-label reveal">Más valor, más diversión</div>
+      <h2 class="reveal">Descubrí nuestros <em>packs especiales</em></h2>
+      <p class="reveal" style="margin-top:0.5rem;">Elegí combinaciones pensadas para regalar o coleccionar.</p>
+      <div class="packs-grid">
+        <div class="pack-card pack-card-1 reveal">
+          <div class="pack-emoji">🏕️</div>
+          <div class="pack-name">Pack Aventura</div>
+          <div class="pack-desc">3 juguetes articulados temáticos. Ideal para explorar.</div>
+          <div class="pack-price">$11.500</div>
+        </div>
+        <div class="pack-card pack-card-2 reveal">
+          <div class="pack-emoji">🌊</div>
+          <div class="pack-name">Pack Océano</div>
+          <div class="pack-desc">Pulpo, tiburón y tortuga articulados. ¡El mar en tus manos!</div>
+          <div class="pack-price">$12.000</div>
+        </div>
+        <div class="pack-card pack-card-3 reveal">
+          <div class="pack-emoji">🦕</div>
+          <div class="pack-name">Pack Dinosaurios</div>
+          <div class="pack-desc">3 dinos prehistóricos articulados. El favorito de los fans.</div>
+          <div class="pack-price">$13.500</div>
+        </div>
+      </div>
+      <div class="packs-cta reveal">
+        <a href="#" class="btn-primary">Ver todos los packs →</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- STORYTELLING -->
+  <section class="card-section">
+    <div class="inner">
+      <div class="story-wrap reveal">
+        <div class="section-label">Nuestra misión</div>
+        <h2>Más que juguetes,<br><em>herramientas para imaginar</em></h2>
+        <p>En PliVerse creemos que jugar es una forma de aprender. Cada pieza está diseñada para acompañar momentos únicos, estimular la creatividad y generar recuerdos inolvidables.</p>
+        <div class="story-quote">"No vendemos plástico.<br>Creamos experiencias."</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section>
+    <div class="inner">
+      <div class="section-label reveal">Tu tranquilidad</div>
+      <h2 class="reveal">Comprá con <em>tranquilidad</em></h2>
+      <div class="trust-grid">
+        <div class="trust-item reveal">
+          <div class="trust-icon">🚚</div>
+          <div class="trust-label">Envíos a todo el país</div>
+          <div class="trust-sub">Rápidos y seguros</div>
+        </div>
+        <div class="trust-item reveal">
+          <div class="trust-icon">💬</div>
+          <div class="trust-label">Atención personalizada</div>
+          <div class="trust-sub">Siempre disponibles</div>
+        </div>
+        <div class="trust-item reveal">
+          <div class="trust-icon">🔒</div>
+          <div class="trust-label">Pago seguro</div>
+          <div class="trust-sub">Múltiples medios</div>
+        </div>
+        <div class="trust-item reveal">
+          <div class="trust-icon">✋</div>
+          <div class="trust-label">Producción artesanal</div>
+          <div class="trust-sub">Hecho con dedicación</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHOLESALE -->
+  <section class="card-section" id="mayoristas">
+    <div class="inner">
+      <div class="wholesale-wrap reveal">
+        <div class="section-label">Para negocios</div>
+        <h2>¿Tenés una juguetería <em>o negocio?</em></h2>
+        <p>Ofrecemos líneas exclusivas para comercios que buscan diferenciarse con productos innovadores.</p>
+        <ul class="wholesale-features">
+          <li>Packs mayoristas con precios especiales</li>
+          <li>Exhibidores de mostrador incluidos</li>
+          <li>Posibilidad de personalización de colores</li>
+          <li>Soporte comercial dedicado</li>
+        </ul>
+        <a href="#" class="btn-wholesale">Quiero vender PliVerse →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section>
+    <div class="inner">
+      <div class="section-label reveal">Opiniones reales</div>
+      <h2 class="reveal">Lo que dicen nuestros <em>clientes</em></h2>
+      <div class="testimonials-grid">
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-text">"Mi hijo no para de jugar con el dinosaurio. La calidad es increíble para el precio, y llegó súper rápido."</div>
+          <div class="testi-author">
+            <div class="testi-avatar" style="background:#fff0eb;">👩</div>
+            <div>
+              <div class="testi-name">Valentina G.</div>
+              <div class="testi-role">Mamá de Mateo, 7 años</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-text">"Lo compré para regalar en un cumpleaños y fue el presente más celebrado de la fiesta."</div>
+          <div class="testi-author">
+            <div class="testi-avatar" style="background:#e8fbfa;">👨</div>
+            <div>
+              <div class="testi-name">Lucas P.</div>
+              <div class="testi-role">Papá de dos nenas</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal" style="background:var(--soft); border: 2px dashed rgba(26,20,18,0.1);">
+          <div style="text-align:center; padding: 1rem 0;">
+            <div style="font-size:2rem; margin-bottom:0.5rem;">💬</div>
+            <div style="font-weight:700; font-size:0.9rem;">¡Tu reseña podría estar aquí!</div>
+            <div style="font-size:0.8rem; color:var(--muted); margin-top:0.25rem;">Comprá y contanos tu experiencia</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="card-section" style="padding-bottom: 2rem;">
+    <div class="inner">
+      <div class="final-cta-wrap reveal">
+        <div class="section-label">¿Listo?</div>
+        <h2>Dejá que la imaginación<br>haga el resto</h2>
+        <p>Miles de chicos ya están jugando, explorando y creando con PliVerse.</p>
+        <a href="#productos" class="btn-final">✦ Explorar colección</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="inner">
+      <div class="footer-logo">Pli<span>Verse</span></div>
+      <div class="footer-tagline">Juguetes 3D que despiertan la imaginación &#127462;&#127479;</div>
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="footer-col-title">Tienda</div>
+          <a href="#">Ver colección</a>
+          <a href="#">Packs especiales</a>
+          <a href="#">Novedades</a>
+          <a href="#">Mayoristas</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Ayuda</div>
+          <a href="#">Cómo comprar</a>
+          <a href="#">Política de envíos</a>
+          <a href="#">Política de cambios</a>
+          <a href="#">Contacto</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Contacto</div>
+          <p>📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="85edeae9e4c5f5e9ecf3e0f7f6e0abe6eae8abe4f7">[email&#160;protected]</a></p>
+          <p>📱 Whatsapp disponible</p>
+          <p>📍 Argentina</p>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Redes</div>
+          <div class="social-links">
+            <div class="social-btn">📷</div>
+            <div class="social-btn">📘</div>
+            <div class="social-btn">🎵</div>
+          </div>
+          <a href="#" style="margin-top:0.75rem;">@pliverse.ar</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2025 PliVerse — Todos los derechos reservados</div>
+        <div>Diseñado y fabricado en Argentina &#127462;&#127479;</div>
+      </div>
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+
+    document.querySelectorAll('.btn-cart').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const orig = this.textCon
