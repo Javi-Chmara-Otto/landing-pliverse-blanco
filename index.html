@@ -67,8 +67,7 @@
 
     .hero-visual { animation: fadeUp 0.8s ease 0.2s both; }
     .hero-toy-card { background: white; border-radius: 28px; padding: 2rem; box-shadow: 0 20px 60px rgba(26,20,18,0.12); display: flex; flex-direction: column; align-items: center; gap: 1rem; position: relative; }
-    .toy-emoji-big { font-size: 7rem; line-height: 1; animation: wiggle 3s ease-in-out infinite; }
-    @keyframes wiggle { 0%,100% { transform: rotate(-5deg) scale(1); } 25% { transform: rotate(5deg) scale(1.05); } 75% { transform: rotate(-3deg) scale(0.98); } }
+    .hero-image img { max-width: 420px; width: 100%; height: auto; }
     .toy-caption { font-size: 0.8rem; font-weight: 600; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
     .toy-name { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 700; text-align: center; }
     .floating-tag { position: absolute; background: var(--lime); color: var(--ink); font-size: 0.72rem; font-weight: 700; padding: 0.4rem 0.8rem; border-radius: 999px; box-shadow: 0 4px 14px rgba(0,0,0,0.1); animation: bobY 4s ease-in-out infinite; }
@@ -271,7 +270,7 @@
         <div class="hero-toy-card">
           <div class="floating-tag floating-tag-1">🧩 Articulado</div>
           <div class="floating-tag floating-tag-2">✔ Seguro y flexible</div>
-          <div class="toy-emoji-big">
+          <div class="hero-image">
             <img src="./img/Imagen_1.png" alt="Muñeco 3D articulado">
           </div>
           <div class="toy-caption">Juguete estrella</div>
